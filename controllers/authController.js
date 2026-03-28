@@ -3,6 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.login = async (req, res) => {
+  console.log("Login so'rovi keldi:", req.body); // SHU QATORNI QO'SHING
+  // ... qolgan kodlar
+};
+
+exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ where: { username } });
