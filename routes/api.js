@@ -91,7 +91,7 @@ router.get('/debtors/search', debtorController.searchDebtor);
  *             properties:
  *               fullname:
  *                 type: string
- *                 example: Ali Valiyev
+ *                 example: Muhammadali Valiyev
  *               amount_usd:
  *                 type: number
  *                 example: 1000
