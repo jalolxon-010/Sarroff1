@@ -6,32 +6,44 @@ const User = sequelize.define("user", {
   password: { type: DataTypes.STRING, allowNull: false }
 });
 
-// YANGI: Asosiy operatsiyalar modeli (Qarz va Balans uchun)
 const Transaction = sequelize.define("transaction", {
   person_name: { 
     type: DataTypes.STRING, 
-    allowNull: false // Kim bilan savdo bo'lyapti?
+    allowNull: false 
   },
   amount_usd: { 
     type: DataTypes.DECIMAL, 
-    defaultValue: 0 // Dollardagi miqdor
+    defaultValue: 0 
   },
   amount_uzs: { 
     type: DataTypes.DECIMAL, 
-    defaultValue: 0 // So'mdagi miqdor
+    defaultValue: 0 
   },
   type: { 
     type: DataTypes.ENUM('gave', 'took'), 
-    allowNull: false // 'gave' - berdim (plyus), 'took' - oldim (minus)
+    allowNull: false 
   },
   comment: { 
     type: DataTypes.STRING, 
-    allowNull: true // Izoh (ixtiyoriy)
+    allowNull: true 
   }
 }, { 
-  timestamps: true // Qachon sodir bo'lganini bilish uchun
+  timestamps: true 
 });
 
-// Eski modellarni (Debtor, ExchangeHistory) olib tashladik, 
-// chunki endi hammasi Transaction ichida bo'ladi.
-module.exports = { sequelize, User, Transaction };
+// YANGI: Sozlamalar modeli (Dollar kursi va boshqalar uchun)
+const Setting = sequelize.define("setting", {
+  key: { 
+    type: DataTypes.STRING, 
+    unique: true, 
+    allowNull: false // Masalan: 'usd_rate'
+  },
+  value: { 
+    type: DataTypes.STRING, 
+    allowNull: false // Masalan: '12800'
+  }
+}, { 
+  timestamps: false // Sozlamalar uchun vaqt unchalik muhim emas
+});
+
+module.exports = { sequelize, User, Transaction, Setting };
