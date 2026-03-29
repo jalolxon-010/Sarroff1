@@ -8,7 +8,7 @@ require("dotenv").config();
 
 const app = express();
 
-// CORS - Tashqi so'rovlarga ruxsat berish
+// --- MIDDLEWARE ---
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -18,28 +18,29 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Swagger - Hujjatlashtirish
+// Swagger hujjati
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Static papka (yuklangan rasmlar uchun)
+// Static fayllar
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // --- ROUTES ---
-// Senda barcha route'lar api.js faylida ekanligini hisobga olib:
 const apiRoutes = require("./routes/api"); 
 const transactionRoutes = require("./routes/transactionRoutes");
 
-// Endi login va debtor'lar uchun URL: https://.../api/login ko'rinishida bo'ladi
+// Muhim: Agar routes/api.js ichida router.post('/login') bo'lsa, 
+// quyidagi qator uni /api/login ko'rinishiga keltiradi.
 app.use('/api', apiRoutes); 
 
-// Tranzaksiyalar uchun alohida route bo'lsa:
+// Tranzaksiyalar uchun (agar api.js dan alohida bo'lsa)
 app.use('/api/transactions', transactionRoutes);
 
-// Server holatini tekshirish uchun
+// Server status
 app.get('/', (req, res) => {
   res.send('Sarrof Backend is running muvaffaqiyatli...');
 });
 
+// --- SERVER START ---
 const PORT = process.env.PORT || 10000;
 
 const start = async () => {
@@ -48,7 +49,7 @@ const start = async () => {
     await sequelize.authenticate();
     console.log("✅ Bazaga muvaffaqiyatli ulandi.");
 
-    // Jadvallarni sinxronizatsiya qilish
+    // Jadvallarni sinxronizatsiya qilish (Render'da ehtiyotkorlik bilan)
     await sequelize.sync({ alter: true }); 
     console.log("✅ Jadvallar yangilandi.");
     
