@@ -31,7 +31,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // --- ROUTES ---
 const apiRoutes = require("./routes/api"); 
 const transactionRoutes = require("./routes/transactionRoutes");
-const settingsRoutes = require("./routes/setting"); // YANGI: Settings route
+const settingsRoutes = require("./routes/settings"); // YANGI: Settings route
 
 app.use('/api', apiRoutes); 
 app.use('/api/transactions', transactionRoutes);
