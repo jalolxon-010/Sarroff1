@@ -6,7 +6,7 @@ const controller = require('../controllers/transactionController');
  * @swagger
  * tags:
  *   name: Transactions
- *   description: Qarz va Balans boshqaruvi tizimi
+ *   description: Qarz va Balans boshqaruvi tizimii
  */
 
 /**
